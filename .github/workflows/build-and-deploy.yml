@@ -76,18 +76,18 @@ jobs:
 
             - name: Generate repository index
               run: |
-                  bunx revenge-plugin generate-index --dist build/dist --base-url "https://tralwdwd.github.io/revenge-next-plugins" --out dist/index.json
+                  bunx revenge-plugin generate-index --dist build/dist --base-url "https://tralwdwd.github.io/revenge-next-plugins" --out build/dist/index.json
 
             - name: Verify dist artifacts
               run: |
-                  ls -la dist/
+                  ls -la build/dist/
                   echo "Artifacts ready for publishing"
 
             - name: Deploy to gh-pages branch
               uses: peaceiris/actions-gh-pages@v4
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist
+                  publish_dir: ./build/dist
                   destination_dir: .
                   keep_files: false
                   force_orphan: true

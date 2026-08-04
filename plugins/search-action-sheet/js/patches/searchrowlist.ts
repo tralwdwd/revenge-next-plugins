@@ -6,7 +6,7 @@ import {
     withDependencies,
     withProps,
 } from "@revenge-mod/modules/finders/filters";
-import { instead } from "@revenge-mod/patcher";
+import { before, instead } from "@revenge-mod/patcher";
 import {
     ReactJSXRuntimeModuleId,
     ReactModuleId,
@@ -44,32 +44,47 @@ export function patchSearchRowList() {
 
     const UserStore = Stores.UserStore as ToRevengeStore<UserStore>;
 
-    return instead(
-        SearchListRowModule?.SearchListRow,
-        "type",
-        ([props], original) => {
-            const ret = original(props);
+    return [
+        instead(
+            SearchListRowModule?.SearchListRow,
+            "type",
+            ([props], original) => {
+                const ret = original(props);
 
-            const { message, channel } = props.label.props;
+                const { message, channel } = props.label.props;
 
-            if (!message) return ret;
+                if (!message) return ret;
 
-            const user = UserStore.getUser(message.author.id);
+                const user = UserStore.getUser(message.author.id);
 
-            const actionSheetConfig = {
-                canAddNewReactions: true,
-                channel,
-                message,
-                user,
-            };
+                const actionSheetConfig = {
+                    canAddNewReactions: true,
+                    channel,
+                    message,
+                    user,
+                };
 
-            ret.props.onLongPress = () => {
-                showLongPressMessageActionSheetModule?.showLongPressMessageActionSheet(
-                    actionSheetConfig,
-                );
-            };
+                ret.props.onLongPress = () => {
+                    showLongPressMessageActionSheetModule?.showLongPressMessageActionSheet(
+                        actionSheetConfig,
+                    );
+                };
 
-            return ret;
-        },
-    );
+                return ret;
+            },
+        ),
+        before(
+            showLongPressMessageActionSheetModule!,
+            "showLongPressMessageActionSheet",
+            (args) => {
+                const [config] = args;
+                if (config.actionSheetSource === "Preview") {
+                    config.actionSheetSource = null;
+                    config.canAddNewReactions = true;
+                }
+
+                return args;
+            },
+        ),
+    ];
 }

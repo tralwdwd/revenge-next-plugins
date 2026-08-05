@@ -47,9 +47,11 @@ export function patchActionSheet(cleanup: PluginCleanupApi) {
             const patches: ActionSheetPatchConfig[] = [];
 
             for (const patch of actionSheetPatches) {
-                if (typeof patch.finder === "string" && key !== patch.finder)
-                    continue;
-                else if (!(patch.finder as RegExp).test(key)) continue;
+                if (typeof patch.finder === "string") {
+                    if (key !== patch.finder) continue;
+                } else {
+                    if (!patch.finder.test(key)) continue;
+                }
 
                 patches.push(patch);
             }

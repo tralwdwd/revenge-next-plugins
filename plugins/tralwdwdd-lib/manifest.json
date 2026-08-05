@@ -4,7 +4,7 @@
     "name": "tralwdwdd plugin library",
     "description": "Shared code for my plugins.",
     "author": "tralwdwdd",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icon": "FileIcon",
     "dependencies": {
         "revenge.api": {

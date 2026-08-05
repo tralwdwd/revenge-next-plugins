@@ -37,7 +37,7 @@
 			"enabled": true,
 			"quoteProperties": "asNeeded",
 			"quoteStyle": "single",
-			"semicolons": "asNeeded",
+			"semicolons": "always",
 			"trailingCommas": "all"
 		}
 	},

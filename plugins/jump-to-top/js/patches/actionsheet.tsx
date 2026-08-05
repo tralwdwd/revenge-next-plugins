@@ -74,7 +74,7 @@ export function patchActionSheet({ cleanup }: PluginApi) {
             },
         ),
         ActionSheetPatcher.registerActionSheetPatch<ForumPostLongPressProps>(
-            /ForumPostLongPressActionSheet/,
+            "ForumPostLongPressActionSheet",
             (tree, props) => {
                 const { guild_id: guildId, id: threadId } = props.thread;
 
@@ -98,6 +98,46 @@ export function patchActionSheet({ cleanup }: PluginApi) {
                                     isDifferentChannel: false,
                                     channelId: threadId,
                                     guildId,
+                                });
+
+                                ActionSheetActionCreators.hideActionSheet();
+                            }}
+                        />
+                    </Design.ActionSheetRow.Group>,
+                );
+            },
+        ),
+        ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(
+            "ThreadLongPressActionSheet",
+            (tree, props) => {
+                const ChannelStore =
+                    Stores.ChannelStore as ToRevengeStore<ChannelStore>;
+
+                const { id: channelId, type } = ChannelStore.getChannel(
+                    props.channelId,
+                );
+
+                if (!allowedChannelTypes.includes(type)) return;
+
+                tree.unshift(
+                    <Design.ActionSheetRow.Group>
+                        <Design.ActionSheetRow
+                            label="Jump To Top"
+                            icon={
+                                <UpsideDown>
+                                    <Design.ActionSheetRow.Icon
+                                        source={
+                                            getAssetIdByName(
+                                                "ArrowLargeDownIcon",
+                                            )!
+                                        }
+                                    />
+                                </UpsideDown>
+                            }
+                            onPress={() => {
+                                jumpToTop({
+                                    isDifferentChannel: true,
+                                    channelId,
                                 });
 
                                 ActionSheetActionCreators.hideActionSheet();

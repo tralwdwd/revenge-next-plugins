@@ -11,6 +11,8 @@
 		"lint:types": "tsc --noEmit && tsc -p cli --noEmit"
 	},
 	"dependencies": {
+		"@react-navigation/core": "^7.21.11",
+		"@react-navigation/native": "^7.3.16",
 		"@revenge-mod/devtools-client": "^1.4.0",
 		"@revenge-mod/devtools-shared": "^1.3.0",
 		"@revenge-mod/plugin-cli": "git+https://github.com/revenge-mod/revenge-plugin-cli.git",

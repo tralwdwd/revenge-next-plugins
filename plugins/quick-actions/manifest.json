@@ -1,11 +1,11 @@
 {
     "format": 1,
-    "id": "dev.tralwdwdd.jump-to-top",
-    "name": "JumpToTop",
-    "description": "Adds a button to jump to the first message in a chat. The opposite of jump to present.",
+    "id": "dev.tralwdwdd.revenge-quick-actions",
+    "name": "RevengeQuickActions",
+    "description": "Adds Revenge Quck Actions to You Bar action sheet.",
     "author": "tralwdwdd",
-    "version": "1.0.2",
-    "icon": "ArrowSmallUpIcon",
+    "version": "1.0.0",
+    "icon": "MagicWandIcon",
     "dependencies": {
         "revenge.api": {
             "version": ">=1 <2"

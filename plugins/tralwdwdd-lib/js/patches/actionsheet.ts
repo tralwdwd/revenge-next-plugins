@@ -39,6 +39,12 @@ type ActionSheetResultWithChildren = {
     };
 };
 
+type MemoSheet = React.MemoExoticComponent<React.ComponentType<any>>;
+
+type ActionSheetModule = {
+    default: React.FC | MemoSheet;
+};
+
 export function patchActionSheet(cleanup: PluginCleanupApi) {
     cleanup(
         before(ActionSheetActionCreators, "openLazy", (args) => {
@@ -60,7 +66,7 @@ export function patchActionSheet(cleanup: PluginCleanupApi) {
 
             sheet.then((module) => {
                 patchSheetModule(
-                    module as { default: React.FC },
+                    module as ActionSheetModule,
                     props,
                     cleanup,
                     patches,
@@ -72,8 +78,42 @@ export function patchActionSheet(cleanup: PluginCleanupApi) {
     );
 }
 
-export function patchSheetModule(
-    module: { default: React.FC },
+function findActionGroups(tree: React.ReactElement): React.ReactElement[] {
+    return (findInReactFiber(
+        tree as React.ReactElement,
+        (node) => node?.[0]?.type?.name === "ActionSheetRowGroup",
+    ) ??
+        (
+            findInReactFiber(
+                tree as React.ReactElement,
+                (node) => node.type?.name === "Stack",
+            ) as React.ReactElement<React.PropsWithChildren> | undefined
+        )?.props?.children) as React.ReactElement[];
+}
+
+function patchMemoSheet(
+    module: ActionSheetModule,
+    props: any,
+    cleanup: PluginCleanupApi,
+    patches: ActionSheetPatchConfig[],
+) {
+    // @ts-expect-error
+    const unpatch = after(module.default as MemoSheet, "type", (tree) => {
+        const actionGroups = findActionGroups(tree as React.ReactElement);
+
+        if (actionGroups) {
+            for (const patch of patches) patch.callback(actionGroups, props);
+        }
+
+        unpatch();
+
+        return tree;
+    });
+    cleanup(unpatch);
+}
+
+function patchLazySheet(
+    module: ActionSheetModule,
     props: any,
     cleanup: PluginCleanupApi,
     patches: ActionSheetPatchConfig[],
@@ -85,16 +125,14 @@ export function patchSheetModule(
                     result as ActionSheetResultWithTypeFunction,
                     "type",
                     (tree) => {
-                        const actionGroups = findInReactFiber(
+                        const actionGroups = findActionGroups(
                             tree as React.ReactElement,
-                            (node) =>
-                                node?.[0]?.type?.name === "ActionSheetRowGroup",
-                        )! as React.ReactElement[];
+                        );
 
-                        for (const patch of patches) {
-                            patch.callback(actionGroups, props);
+                        if (actionGroups) {
+                            for (const patch of patches)
+                                patch.callback(actionGroups, props);
                         }
-
                         return tree;
                     },
                 ),
@@ -102,9 +140,9 @@ export function patchSheetModule(
         } else {
             const actionGroups = (result as ActionSheetResultWithChildren).props
                 .children;
-
-            for (const patch of patches) {
-                patch.callback(actionGroups, props);
+            if (actionGroups) {
+                for (const patch of patches)
+                    patch.callback(actionGroups, props);
             }
         }
 
@@ -112,6 +150,20 @@ export function patchSheetModule(
 
         return result;
     });
+    cleanup(unpatch);
+}
+
+export function patchSheetModule(
+    module: ActionSheetModule,
+    props: any,
+    cleanup: PluginCleanupApi,
+    patches: ActionSheetPatchConfig[],
+) {
+    if (typeof module.default === "object") {
+        patchMemoSheet(module, props, cleanup, patches);
+    } else {
+        patchLazySheet(module, props, cleanup, patches);
+    }
 }
 
 export default { registerActionSheetPatch };

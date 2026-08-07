@@ -5,6 +5,10 @@
 - JumpToTop
 - SearchActionSheet
 
+#### New Plugins
+
+- RevengeQuickActions
+
 ---
 
 ## Installation

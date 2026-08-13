@@ -12,6 +12,16 @@ type Props = React.ComponentProps<
 export function SettingsComponent({ api }: Props) {
     const { actionConfigs } = api.jsonStorage.use()!;
 
+    const openActionSheet = (index: number) =>
+        ActionSheetActionCreators.openLazy(
+            import("./components/QuickActionSheet"),
+            "quick-action-sheet",
+            {
+                api,
+                index,
+            },
+        );
+
     const createAction = () => {
         actionConfigs.push({
             title: "New Action",
@@ -22,14 +32,7 @@ export function SettingsComponent({ api }: Props) {
 
         api.jsonStorage.set({ actionConfigs });
 
-        ActionSheetActionCreators.openLazy(
-            import("./components/QuickActionSheet"),
-            "quick-action-sheet",
-            {
-                api,
-                index: actionConfigs.length - 1,
-            },
-        );
+        openActionSheet(actionConfigs.length - 1);
     };
 
     return (
@@ -40,16 +43,7 @@ export function SettingsComponent({ api }: Props) {
                         label={action.title}
                         icon={<TableRowAssetIcon name={action.icon} />}
                         arrow
-                        onPress={() => {
-                            ActionSheetActionCreators.openLazy(
-                                import("./components/QuickActionSheet"),
-                                "quick-action-sheet",
-                                {
-                                    api,
-                                    index,
-                                },
-                            );
-                        }}
+                        onPress={() => openActionSheet(index)}
                     />
                 ))}
             </Design.TableRowGroup>

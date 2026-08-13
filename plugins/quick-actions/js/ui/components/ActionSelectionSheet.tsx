@@ -1,7 +1,5 @@
 import { TableRowAssetIcon } from "@revenge-mod/components";
-import { ActionSheetActionCreators } from "@revenge-mod/discord/actions";
 import { Design } from "@revenge-mod/discord/design";
-import { lookupGeneratedIconComponent } from "@revenge-mod/utils/discord";
 import { quickActions } from "../../lib/actions";
 import type { QuickAction } from "../../types";
 
@@ -10,21 +8,17 @@ type ActionSelectionSheetProps = {
     onValueChange: (key: keyof typeof quickActions) => void;
 };
 
-const CheckIcon = lookupGeneratedIconComponent("CheckmarkLargeIcon")!;
-
 export default function ActionSelectionSheet({
     selectedAction,
     onValueChange,
 }: ActionSelectionSheetProps) {
-    const save = (value: keyof typeof quickActions) => {
-        onValueChange(value);
-        ActionSheetActionCreators.hideActionSheet();
-    };
-
     return (
         <Design.ActionSheet>
             <Design.BottomSheetTitleHeader title="Select Action" />
-            <Design.ActionSheetRow.Group>
+            <Design.TableRadioGroup
+                defaultValue={selectedAction}
+                onChange={onValueChange}
+            >
                 {(
                     Object.keys(quickActions) as Array<
                         keyof typeof quickActions
@@ -33,17 +27,14 @@ export default function ActionSelectionSheet({
                     const action = quickActions[key] as QuickAction;
 
                     return (
-                        <Design.ActionSheetRow
+                        <Design.TableRadioRow
                             label={action.name}
                             icon={<TableRowAssetIcon name={action.icon} />}
-                            trailing={
-                                key === selectedAction ? <CheckIcon /> : null
-                            }
-                            onPress={() => save(key)}
+                            value={key}
                         />
                     );
                 })}
-            </Design.ActionSheetRow.Group>
+            </Design.TableRadioGroup>
         </Design.ActionSheet>
     );
 }

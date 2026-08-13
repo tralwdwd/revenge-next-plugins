@@ -88,6 +88,7 @@ export default function QuickActionSheet({ api, index }: Props) {
                                     updateAction("action", key);
                                 },
                             },
+                            "stack",
                         );
                     }}
                 />

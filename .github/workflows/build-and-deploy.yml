@@ -76,12 +76,15 @@ jobs:
 
             - name: Generate repository index
               run: |
-                  bunx revenge-plugin generate-index --dist build/dist --base-url "https://tralwdwd.github.io/revenge-next-plugins" --out build/dist/index.json
+                  bunx revenge-plugin generate-index --dist build/dist --base-url "https://next.tralwdwd.dev" --out build/dist/index.json
 
             - name: Verify dist artifacts
               run: |
                   ls -la build/dist/
                   echo "Artifacts ready for publishing"
+
+            - name: Generate CNAME file
+              run: echo "next.tralwdwd.dev" > CNAME
 
             - name: Deploy to gh-pages branch
               uses: peaceiris/actions-gh-pages@v4

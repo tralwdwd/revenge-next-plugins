@@ -50,6 +50,8 @@ export function patchSearchRowList(cleanup: PluginCleanupApi) {
                     ([props], original) => {
                         const ret = original(props);
 
+                        if (typeof props.label === "string") return ret;
+
                         const { message, channel } = props.label.props as {
                             message: Message;
                             channel: Channel;

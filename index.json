@@ -1,0 +1,109 @@
+{
+  "format": 1,
+  "name": "tralwdwdd's Plugin Repository",
+  "description": "Revenge Next plugins ported over and made by tralwdwdd.",
+  "plugins": {
+    "dev.tralwdwdd.jump-to-top": {
+      "name": "JumpToTop",
+      "description": "Adds a button to jump to the first message in a chat. The opposite of jump to present.",
+      "author": "tralwdwdd",
+      "icon": "ArrowSmallUpIcon",
+      "channels": {
+        "latest": "1.0.3"
+      },
+      "versions": {
+        "1.0.3": {
+          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.jump-to-top.zip",
+          "sha256": "6c41e2a9d1de2596af01f467370594946c2b7bcb220938c2f95a42303ab3339c",
+          "size": 1602,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
+    "dev.tralwdwdd.revenge-quick-actions": {
+      "name": "RevengeQuickActions",
+      "description": "Adds Revenge Quck Actions to You Bar action sheet.",
+      "author": "tralwdwdd",
+      "icon": "MagicWandIcon",
+      "channels": {
+        "latest": "1.1.2"
+      },
+      "versions": {
+        "1.1.2": {
+          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.revenge-quick-actions.zip",
+          "sha256": "5da4c89b4450904df79b4414233be5962ff7e72fd84fb9bc2b0f33b667e51d16",
+          "size": 2689,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
+    "dev.tralwdwdd.search-action-sheet": {
+      "name": "SearchActionSheet",
+      "description": "Makes search results open the action sheet on long press.",
+      "author": "tralwdwdd",
+      "icon": "icon-search",
+      "channels": {
+        "latest": "1.0.3"
+      },
+      "versions": {
+        "1.0.3": {
+          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.search-action-sheet.zip",
+          "sha256": "e02a809cdaa0c8434c1b304fd7bff0e4b6958a62c69b899ec0b0c00d3289c711",
+          "size": 962,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
+    "dev.tralwdwdd.tralwdwdd-lib": {
+      "name": "tralwdwdd plugin library",
+      "description": "Shared code for my plugins.",
+      "author": "tralwdwdd",
+      "icon": "FileIcon",
+      "channels": {
+        "latest": "1.0.4"
+      },
+      "versions": {
+        "1.0.4": {
+          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.tralwdwdd-lib.zip",
+          "sha256": "09b8f67dbd8834c16d17d5100de65d0962306c92e4c711cacf2e482756c3552e",
+          "size": 1055,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    }
+  }
+}

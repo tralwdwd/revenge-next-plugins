@@ -1,5 +1,4 @@
-import * as ActionSheetPatcher from "./patches/actionsheet";
-import { patchActionSheet } from "./patches/actionsheet";
+import ActionSheetPatcher, { patchActionSheet } from "./patches/actionsheet";
 
 export default plugin({
     start({ cleanup, decorate }) {

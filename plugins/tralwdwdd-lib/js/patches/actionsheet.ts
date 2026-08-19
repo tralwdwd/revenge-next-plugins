@@ -15,7 +15,7 @@ type ActionSheetPatchConfig<P extends {} = any> = {
 
 const actionSheetPatches: ActionSheetPatchConfig[] = [];
 
-export function registerActionSheetPatch<P extends {} = any>(
+function registerActionSheetPatch<P extends {} = any>(
     finder: string | RegExp,
     callback: ActionSheetCallback<P>,
 ) {

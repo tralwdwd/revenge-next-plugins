@@ -20,7 +20,7 @@ type TralwdwddLibrary = {
 };
 
 declare module "@revenge-mod/plugins/types" {
-    interface UnscopedPreInitPluginApi {
+    interface UnscopedPluginApi {
         tralwdwdd: TralwdwddLibrary;
     }
 }

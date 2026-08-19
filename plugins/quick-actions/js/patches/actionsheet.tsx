@@ -6,9 +6,10 @@ import type { QuickActionStorage } from "../types";
 
 export function patchActionSheet({
     jsonStorage,
+    unscoped,
     cleanup,
 }: PluginApi<{ jsonStorage: QuickActionStorage }>) {
-    const ActionSheetPatcher = window.tralwdwdd.ActionSheetPatcher;
+    const { ActionSheetPatcher } = unscoped.tralwdwdd;
 
     cleanup(
         ActionSheetPatcher.registerActionSheetPatch(

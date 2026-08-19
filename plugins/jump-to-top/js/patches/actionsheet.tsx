@@ -29,8 +29,8 @@ const allowedChannelTypes = [
     ChannelType.PRIVATE_THREAD,
 ];
 
-export function patchActionSheet({ cleanup }: PluginApi) {
-    const ActionSheetPatcher = window.tralwdwdd.ActionSheetPatcher;
+export function patchActionSheet({ cleanup, unscoped }: PluginApi) {
+    const { ActionSheetPatcher } = unscoped.tralwdwdd;
 
     cleanup(
         ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(

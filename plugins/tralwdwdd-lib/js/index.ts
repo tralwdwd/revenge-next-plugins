@@ -1,19 +1,26 @@
-import ActionSheetPatcher, { patchActionSheet } from "./patches/actionsheet";
+/// <reference types="@revenge-mod/types/hidden" />
+
+import * as ActionSheetPatcher from "./patches/actionsheet";
+import { patchActionSheet } from "./patches/actionsheet";
 
 export default plugin({
-    start({ cleanup }) {
+    start({ cleanup, decorate }) {
         patchActionSheet(cleanup);
 
-        window.tralwdwdd = {
-            ActionSheetPatcher,
-        };
+        decorate((plugin) => {
+            plugin.api.unscoped.tralwdwdd = {
+                ActionSheetPatcher,
+            };
+        });
     },
 });
 
-declare global {
-    interface Window {
-        tralwdwdd: {
-            ActionSheetPatcher: typeof ActionSheetPatcher;
-        };
+type TralwdwddLibrary = {
+    ActionSheetPatcher: typeof ActionSheetPatcher;
+};
+
+declare module "@revenge-mod/plugins/types" {
+    interface UnscopedPreInitPluginApi {
+        tralwdwdd: TralwdwddLibrary;
     }
 }

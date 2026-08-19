@@ -19,11 +19,11 @@
         "@revenge-mod/types": "git+https://github.com/revenge-mod/revenge-types.git"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.8",
+        "@biomejs/biome": "^2.5.9",
         "@shopify/flash-list": "^2.3.2",
         "@types/node": "^26.2.0",
         "@types/react": "^19.2.18",
-        "@vencord/discord-types": "^1.0.1",
+        "@vencord/discord-types": "^1.0.2",
         "react-native": "0.81.6",
         "typescript": "^7.0.2"
     },

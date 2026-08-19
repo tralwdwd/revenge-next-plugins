@@ -1,5 +1,3 @@
-/// <reference types="@revenge-mod/types/hidden" />
-
 import * as ActionSheetPatcher from "./patches/actionsheet";
 import { patchActionSheet } from "./patches/actionsheet";
 

@@ -1,3 +1,4 @@
+import { DispatcherModuleId } from "@revenge-mod/discord/common/flux";
 import { ImportTrackerModuleId } from "@revenge-mod/discord/common/import-tracker";
 import { getModules, lookupModule } from "@revenge-mod/modules/finders";
 import {
@@ -5,7 +6,7 @@ import {
     withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { before, instead } from "@revenge-mod/patcher";
-import { ReactJSXRuntimeModuleId, ReactModuleId } from "@revenge-mod/react";
+import { ReactJSXRuntimeModuleId } from "@revenge-mod/react";
 import type { PluginCleanupApi } from "@revenge-mod/plugins/types";
 import type { Channel, Message, User } from "@vencord/discord-types";
 
@@ -18,21 +19,23 @@ type MessageActionSheetProps = {
 };
 
 let showLongPressMessageActionSheet: (props: MessageActionSheetProps) => void;
-const { loose, relative } = withDependencies;
+const { relative, last } = withDependencies;
+
+const ActionSheetActionCreatorsFilter = last([
+    ReactJSXRuntimeModuleId,
+    DispatcherModuleId,
+    relative(1),
+    relative(2),
+    null,
+    ImportTrackerModuleId,
+]);
 
 const [showLongPressMessageActionSheetModule] = lookupModule(
     withProps<{
         showLongPressMessageActionSheet: typeof showLongPressMessageActionSheet;
     }>("showLongPressMessageActionSheet").and(
         withDependencies([
-            loose([
-                null,
-                ReactModuleId,
-                ReactJSXRuntimeModuleId,
-                null,
-                relative(1),
-                relative(2),
-            ]),
+            ActionSheetActionCreatorsFilter,
             null,
             null,
             ImportTrackerModuleId,

@@ -13,7 +13,8 @@
         "types": ["@revenge-mod/types"],
 
         "paths": {
-            "@/types/*": ["./types/*"]
+            "@/types/*": ["./types/*"],
+            "@shared/*": ["./shared/*"]
         }
     },
     "include": ["plugins", "types"],

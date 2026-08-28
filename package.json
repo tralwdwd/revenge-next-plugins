@@ -25,6 +25,7 @@
         "@types/react": "^19.2.18",
         "@vencord/discord-types": "^1.0.2",
         "react-native": "0.81.6",
+        "rolldown": "^1.2.6",
         "typescript": "^7.0.2"
     },
     "overrides": {
@@ -40,6 +41,10 @@
         "react-native-screens": "npm:dry-uninstall"
     },
     "trustedDependencies": [
+        "@revenge-mod/plugin-cli",
         "@swc/core"
-    ]
+    ],
+    "patchedDependencies": {
+        "@revenge-mod/plugin-cli@github:revenge-mod/revenge-plugin-cli#4dcf299": "patches/@revenge-mod%2Fplugin-cli@github%3Arevenge-mod%2Frevenge-plugin-cli#4dcf299.patch"
+    }
 }

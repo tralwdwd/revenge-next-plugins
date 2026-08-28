@@ -1,13 +1,12 @@
-import { DispatcherModuleId } from "@revenge-mod/discord/common/flux";
 import { ImportTrackerModuleId } from "@revenge-mod/discord/common/import-tracker";
 import { getModules, lookupModule } from "@revenge-mod/modules/finders";
 import {
     withDependencies,
     withProps,
 } from "@revenge-mod/modules/finders/filters";
-import { before, instead } from "@revenge-mod/patcher";
-import { ReactJSXRuntimeModuleId } from "@revenge-mod/react";
-import type { PluginCleanupApi } from "@revenge-mod/plugins/types";
+import { instead } from "@revenge-mod/patcher";
+import { lazy } from "@shared/lazy";
+import type { PluginApi } from "@revenge-mod/plugins/types";
 import type { Channel, Message, User } from "@vencord/discord-types";
 
 type MessageActionSheetProps = {
@@ -18,32 +17,28 @@ type MessageActionSheetProps = {
     user: User;
 };
 
-let showLongPressMessageActionSheet: (props: MessageActionSheetProps) => void;
-const { relative, last } = withDependencies;
+const showLongPressMessageActionSheetModule = lazy(() => {
+    const [module] = lookupModule(
+        withProps<{
+            showLongPressMessageActionSheet: (
+                props: MessageActionSheetProps,
+            ) => void;
+        }>("showLongPressMessageActionSheet").and(
+            withDependencies([
+                withProps("openLazy"),
+                null,
+                null,
+                ImportTrackerModuleId,
+            ]),
+        ),
+    );
 
-const ActionSheetActionCreatorsFilter = last([
-    ReactJSXRuntimeModuleId,
-    DispatcherModuleId,
-    relative(1),
-    relative(2),
-    null,
-    ImportTrackerModuleId,
-]);
+    if (module) return module;
+});
 
-const [showLongPressMessageActionSheetModule] = lookupModule(
-    withProps<{
-        showLongPressMessageActionSheet: typeof showLongPressMessageActionSheet;
-    }>("showLongPressMessageActionSheet").and(
-        withDependencies([
-            ActionSheetActionCreatorsFilter,
-            null,
-            null,
-            ImportTrackerModuleId,
-        ]),
-    ),
-);
+export function patchSearchRowList({ cleanup, unscoped }: PluginApi) {
+    const { ActionSheetPatcher } = unscoped.tralwdwdd;
 
-export function patchSearchRowList(cleanup: PluginCleanupApi) {
     cleanup(
         getModules(withProps("SearchListRow"), (SearchListRowModule) => {
             cleanup(
@@ -83,17 +78,13 @@ export function patchSearchRowList(cleanup: PluginCleanupApi) {
             );
         }),
 
-        before(
-            showLongPressMessageActionSheetModule!,
-            "showLongPressMessageActionSheet",
-            (args) => {
-                const [config] = args;
+        ActionSheetPatcher.registerActionSheetPatch<MessageActionSheetProps>(
+            "MessageLongPressActionSheet",
+            (_, config) => {
                 if (config.actionSheetSource === "Preview") {
                     config.actionSheetSource = void 0;
                     config.canAddNewReactions = true;
                 }
-
-                return args;
             },
         ),
     );

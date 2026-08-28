@@ -1,0 +1,14 @@
+diff --git a/package.json b/package.json
+index a7b4f3ad5dda25352587f39059aa560b5ae9a040..2c40f3fe807b912719f9b1573a0676724913f1a5 100644
+--- a/package.json
++++ b/package.json
+@@ -19,7 +19,8 @@
+ 		"build": "tsc -p tsconfig.json",
+ 		"prepack": "npm run build",
+ 		"lint:types": "tsc -p tsconfig.json --noEmit",
+-		"test": "bun test"
++		"test": "bun test",
++        "prepare": "bun run build"
+ 	},
+ 	"dependencies": {
+ 		"@swc/core": "^1.15.46",

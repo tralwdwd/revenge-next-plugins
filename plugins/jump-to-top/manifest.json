@@ -14,7 +14,7 @@
             "version": "*"
         },
         "dev.tralwdwdd.tralwdwdd-lib": {
-            "version": "*"
+            "version": ">=1.0.4"
         }
     },
     "dist": {

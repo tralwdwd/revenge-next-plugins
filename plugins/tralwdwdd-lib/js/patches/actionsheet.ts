@@ -29,6 +29,29 @@ function registerActionSheetPatch<P extends {} = any>(
     };
 }
 
+type PropsPatchCallback<P extends {} = any> = (props: P) => void;
+
+type PropsPatchConfig<P extends {} = any> = {
+    finder: string | RegExp;
+    callback: PropsPatchCallback<P>;
+};
+
+const actionSheetPropsPatches: PropsPatchConfig[] = [];
+
+export function registerPropsPatch<P extends {} = any>(
+    finder: string | RegExp,
+    callback: PropsPatchCallback<P>,
+) {
+    actionSheetPropsPatches.push({ finder, callback });
+
+    return () => {
+        const index = actionSheetPropsPatches.findIndex(
+            (patch) => patch.callback === callback,
+        );
+        if (index !== -1) actionSheetPropsPatches.splice(index, 1);
+    };
+}
+
 type ActionSheetResultWithTypeFunction = {
     type: React.FC;
 };
@@ -50,26 +73,28 @@ export function patchActionSheet(cleanup: PluginCleanupApi) {
         before(ActionSheetActionCreators, "openLazy", (args) => {
             const [sheet, key, props] = args;
 
-            const patches: ActionSheetPatchConfig[] = [];
+            const propsPatches = actionSheetPropsPatches.filter((p) =>
+                typeof p.finder === "string"
+                    ? key === p.finder
+                    : p.finder.test(key),
+            );
 
-            for (const patch of actionSheetPatches) {
-                if (typeof patch.finder === "string") {
-                    if (key !== patch.finder) continue;
-                } else {
-                    if (!patch.finder.test(key)) continue;
-                }
+            propsPatches.forEach((p) => p.callback(props));
 
-                patches.push(patch);
-            }
+            const sheetPatches = actionSheetPatches.filter((p) =>
+                typeof p.finder === "string"
+                    ? key === p.finder
+                    : p.finder.test(key),
+            );
 
-            if (patches.length === 0) return args;
+            if (sheetPatches.length === 0) return args;
 
             sheet.then((module) => {
                 patchSheetModule(
                     module as ActionSheetModule,
                     props,
                     cleanup,
-                    patches,
+                    sheetPatches,
                 );
             });
 
@@ -166,4 +191,4 @@ export function patchSheetModule(
     }
 }
 
-export default { registerActionSheetPatch };
+export default { registerActionSheetPatch, registerPropsPatch };

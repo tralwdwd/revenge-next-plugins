@@ -78,9 +78,9 @@ export function patchSearchRowList({ cleanup, unscoped }: PluginApi) {
             );
         }),
 
-        ActionSheetPatcher.registerActionSheetPatch<MessageActionSheetProps>(
+        ActionSheetPatcher.registerPropsPatch<MessageActionSheetProps>(
             "MessageLongPressActionSheet",
-            (_, config) => {
+            (config) => {
                 if (config.actionSheetSource === "Preview") {
                     config.actionSheetSource = void 0;
                     config.canAddNewReactions = true;

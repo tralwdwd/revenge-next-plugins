@@ -6,26 +6,27 @@
         "build": "revenge-plugin build",
         "build:dev": "revenge-plugin build --dev",
         "generate-index": "revenge-plugin generate-index",
+        "plan-releases": "revenge-plugin plan-releases",
         "serve": "revenge-plugin serve",
         "lint": "biome check",
         "lint:types": "tsc --noEmit && tsc -p cli --noEmit"
     },
     "dependencies": {
-        "@react-navigation/core": "^7.21.12",
-        "@react-navigation/native": "^7.3.16",
+        "@react-navigation/core": "^7.21.13",
+        "@react-navigation/native": "^7.3.18",
         "@revenge-mod/devtools-client": "^1.4.0",
         "@revenge-mod/devtools-shared": "^1.3.0",
         "@revenge-mod/plugin-cli": "git+https://github.com/revenge-mod/revenge-plugin-cli.git",
         "@revenge-mod/types": "git+https://github.com/revenge-mod/revenge-types.git"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.9",
+        "@biomejs/biome": "^2.5.12",
         "@shopify/flash-list": "^2.3.2",
-        "@types/node": "^26.2.0",
+        "@types/node": "^26.5.0",
         "@types/react": "^19.2.18",
         "@vencord/discord-types": "^1.0.2",
         "react-native": "0.81.6",
-        "rolldown": "^1.2.6",
+        "rolldown": "^1.2.7",
         "typescript": "^7.0.2"
     },
     "overrides": {
@@ -43,8 +44,5 @@
     "trustedDependencies": [
         "@revenge-mod/plugin-cli",
         "@swc/core"
-    ],
-    "patchedDependencies": {
-        "@revenge-mod/plugin-cli@github:revenge-mod/revenge-plugin-cli#4dcf299": "patches/@revenge-mod%2Fplugin-cli@github%3Arevenge-mod%2Frevenge-plugin-cli#4dcf299.patch"
-    }
+    ]
 }

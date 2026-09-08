@@ -13,7 +13,7 @@
       },
       "versions": {
         "1.0.3": {
-          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.jump-to-top.zip",
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.jump-to-top@1.0.3.zip",
           "sha256": "0d7b210055dedeb22cb74327af305d5eb732fac1150bcb07f9bab3d093df6e5b",
           "size": 1608,
           "dependencies": {
@@ -40,7 +40,7 @@
       },
       "versions": {
         "1.1.2": {
-          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.revenge-quick-actions.zip",
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.revenge-quick-actions@1.1.2.zip",
           "sha256": "0a0eb5c37f61f6ec17f4439feef6f52d03e30d4a4f2759e9a30d6ca228c4ca66",
           "size": 2697,
           "dependencies": {
@@ -67,7 +67,7 @@
       },
       "versions": {
         "1.0.6": {
-          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.search-action-sheet.zip",
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.search-action-sheet@1.0.6.zip",
           "sha256": "6d0c77d00af94f17a1f723cdaecbac4da5221fc814f1859f50727fb87811eb6d",
           "size": 1022,
           "dependencies": {
@@ -94,7 +94,7 @@
       },
       "versions": {
         "1.0.5": {
-          "url": "https://next.tralwdwd.dev/dev.tralwdwdd.tralwdwdd-lib.zip",
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.tralwdwdd-lib@1.0.5.zip",
           "sha256": "e3906131193d74f15824c7c9bc8174aab9885d89db59747a0766fd361c8df749",
           "size": 1085,
           "dependencies": {

@@ -9,7 +9,7 @@
       "author": "tralwdwdd",
       "icon": "ArrowSmallUpIcon",
       "channels": {
-        "latest": "1.0.3"
+        "latest": "1.0.4"
       },
       "versions": {
         "1.0.3": {
@@ -27,6 +27,49 @@
               "version": ">=1.0.4"
             }
           }
+        },
+        "1.0.4": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.jump-to-top@1.0.4.zip",
+          "sha256": "c79b179ad1f91c0dddc9a676550c9b193fe5a332912c19a685139dbda007393d",
+          "size": 1781,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": ">=1.0.4"
+            }
+          }
+        }
+      }
+    },
+    "dev.tralwdwdd.permission-viewer": {
+      "name": "Permission Viewer",
+      "description": "View the permissions a user or channel has, and the roles of a server. Ported to Revenge Next",
+      "author": "tralwdwdd",
+      "icon": "ShieldIcon",
+      "channels": {
+        "latest": "1.0.0"
+      },
+      "versions": {
+        "1.0.0": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.permission-viewer@1.0.0.zip",
+          "sha256": "5d38c0fe1e54a6ed26a11be9aa12c8b699a37afc0f18142b38dba274fd8da318",
+          "size": 2639,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": ">=1.0.6"
+            }
+          }
         }
       }
     },
@@ -36,13 +79,29 @@
       "author": "tralwdwdd",
       "icon": "MagicWandIcon",
       "channels": {
-        "latest": "1.1.2"
+        "latest": "1.1.3"
       },
       "versions": {
         "1.1.2": {
           "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.revenge-quick-actions@1.1.2.zip",
           "sha256": "0a0eb5c37f61f6ec17f4439feef6f52d03e30d4a4f2759e9a30d6ca228c4ca66",
           "size": 2697,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": ">=1.0.4"
+            }
+          }
+        },
+        "1.1.3": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.revenge-quick-actions@1.1.3.zip",
+          "sha256": "aa633ebc6949feb94e18d1b8c6d3a5d5146f1b0d44bdcb2062d160d392ad7ebd",
+          "size": 2743,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"
@@ -63,13 +122,29 @@
       "author": "tralwdwdd",
       "icon": "icon-search",
       "channels": {
-        "latest": "1.0.6"
+        "latest": "1.0.7"
       },
       "versions": {
         "1.0.6": {
           "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.search-action-sheet@1.0.6.zip",
           "sha256": "6d0c77d00af94f17a1f723cdaecbac4da5221fc814f1859f50727fb87811eb6d",
           "size": 1022,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": ">=1.0.5"
+            }
+          }
+        },
+        "1.0.7": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.search-action-sheet@1.0.7.zip",
+          "sha256": "f1b7e5c3c1d3b4a8f5399efc9926bf487e2a272654064b4e6f8fc235cab20c1e",
+          "size": 993,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"
@@ -90,13 +165,26 @@
       "author": "tralwdwdd",
       "icon": "FileIcon",
       "channels": {
-        "latest": "1.0.5"
+        "latest": "1.0.6"
       },
       "versions": {
         "1.0.5": {
           "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.tralwdwdd-lib@1.0.5.zip",
           "sha256": "e3906131193d74f15824c7c9bc8174aab9885d89db59747a0766fd361c8df749",
           "size": 1085,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.0.6": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.tralwdwdd-lib@1.0.6.zip",
+          "sha256": "00598421d415719e187b30ecd4bb178e18f319827d59f5a82f9d0e2de2507d19",
+          "size": 1105,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"

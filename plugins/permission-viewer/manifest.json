@@ -1,11 +1,11 @@
 {
     "format": 1,
-    "id": "dev.tralwdwdd.jump-to-top",
-    "name": "JumpToTop",
-    "description": "Adds a button to jump to the first message in a chat. The opposite of jump to present.",
+    "id": "dev.tralwdwdd.permission-viewer",
+    "name": "Permission Viewer",
+    "description": "View the permissions a user or channel has, and the roles of a server. Ported to Revenge Next",
     "author": "tralwdwdd",
-    "version": "1.0.4",
-    "icon": "ArrowSmallUpIcon",
+    "version": "1.0.0",
+    "icon": "ShieldIcon",
     "dependencies": {
         "revenge.api": {
             "version": ">=1 <2"
@@ -14,7 +14,7 @@
             "version": "*"
         },
         "dev.tralwdwdd.tralwdwdd-lib": {
-            "version": ">=1.0.4"
+            "version": ">=1.0.6"
         }
     },
     "dist": {

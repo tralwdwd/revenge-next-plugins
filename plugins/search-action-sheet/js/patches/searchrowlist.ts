@@ -5,25 +5,27 @@ import {
     withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { instead } from "@revenge-mod/patcher";
-import { lazy } from "@shared/lazy";
+import { proxify } from "@revenge-mod/utils/proxy";
 import type { PluginApi } from "@revenge-mod/plugins/types";
 import type { Channel, Message, User } from "@vencord/discord-types";
 
 type MessageActionSheetProps = {
-    actionSheetSource?: string;
-    canAddNewReactions: boolean;
-    channel: Channel;
-    message: Message;
-    user: User;
+	actionSheetSource?: string;
+	canAddNewReactions: boolean;
+	channel: Channel;
+	message: Message;
+	user: User;
 };
 
-const showLongPressMessageActionSheetModule = lazy(() => {
+type MessageActionSheetUtils = {
+    showLongPressMessageActionSheet: (props: MessageActionSheetProps) => void;
+};
+
+let MessageActionSheetUtils: MessageActionSheetUtils = proxify(() => {
     const [module] = lookupModule(
-        withProps<{
-            showLongPressMessageActionSheet: (
-                props: MessageActionSheetProps,
-            ) => void;
-        }>("showLongPressMessageActionSheet").and(
+        withProps<MessageActionSheetUtils>(
+            "showLongPressMessageActionSheet",
+        ).and(
             withDependencies([
                 withProps("openLazy"),
                 null,
@@ -33,59 +35,59 @@ const showLongPressMessageActionSheetModule = lazy(() => {
         ),
     );
 
-    if (module) return module;
-});
+    if (module) return (MessageActionSheetUtils = module);
+})!;
 
 export function patchSearchRowList({ cleanup, unscoped }: PluginApi) {
-    const { ActionSheetPatcher } = unscoped.tralwdwdd;
+	const { ActionSheetPatcher } = unscoped.tralwdwdd;
 
-    cleanup(
-        getModules(withProps("SearchListRow"), (SearchListRowModule) => {
-            cleanup(
-                instead(
-                    SearchListRowModule?.SearchListRow,
-                    "type",
-                    ([props], original) => {
-                        const ret = original(props);
+	cleanup(
+		getModules(withProps("SearchListRow"), SearchListRowModule => {
+			cleanup(
+				instead(
+					SearchListRowModule?.SearchListRow,
+					"type",
+					([props], original) => {
+						const ret = original(props);
 
-                        if (typeof props.label === "string") return ret;
+						if (typeof props.label === "string") return ret;
 
-                        const { message, channel } = props.label.props as {
-                            message: Message;
-                            channel: Channel;
-                        };
+						const { message, channel } = props.label.props as {
+							message: Message;
+							channel: Channel;
+						};
 
-                        if (!message) return ret;
+						if (!message) return ret;
 
-                        const user = message.author;
+						const user = message.author;
 
-                        const actionSheetConfig: MessageActionSheetProps = {
-                            canAddNewReactions: true,
-                            channel,
-                            message,
-                            user,
-                        };
+						const actionSheetConfig: MessageActionSheetProps = {
+							canAddNewReactions: true,
+							channel,
+							message,
+							user,
+						};
 
-                        ret.props.onLongPress = () => {
-                            showLongPressMessageActionSheetModule?.showLongPressMessageActionSheet(
+						ret.props.onLongPress = () => {
+							MessageActionSheetUtils.showLongPressMessageActionSheet(
                                 actionSheetConfig,
                             );
-                        };
+						};
 
-                        return ret;
-                    },
-                ),
-            );
-        }),
+						return ret;
+					},
+				),
+			);
+		}),
 
-        ActionSheetPatcher.registerPropsPatch<MessageActionSheetProps>(
-            "MessageLongPressActionSheet",
-            (config) => {
-                if (config.actionSheetSource === "Preview") {
-                    config.actionSheetSource = void 0;
-                    config.canAddNewReactions = true;
-                }
-            },
-        ),
-    );
+		ActionSheetPatcher.registerPropsPatch<MessageActionSheetProps>(
+			"MessageLongPressActionSheet",
+			config => {
+				if (config.actionSheetSource === "Preview") {
+					config.actionSheetSource = void 0;
+					config.canAddNewReactions = true;
+				}
+			},
+		),
+	);
 }

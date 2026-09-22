@@ -8,9 +8,15 @@ type ActionSheetCallback<P extends {} = any> = (
     props: P,
 ) => void;
 
+type ActionSheetPatchOptions = {
+    findActionGroups?: (element: React.ReactElement) => React.ReactElement[] | undefined;
+}
+
 type ActionSheetPatchConfig<P extends {} = any> = {
     finder: string | RegExp;
     callback: ActionSheetCallback<P>;
+    options?: ActionSheetPatchOptions;
+
 };
 
 const actionSheetPatches: ActionSheetPatchConfig[] = [];
@@ -18,8 +24,9 @@ const actionSheetPatches: ActionSheetPatchConfig[] = [];
 function registerActionSheetPatch<P extends {} = any>(
     finder: string | RegExp,
     callback: ActionSheetCallback<P>,
+    options?: ActionSheetPatchOptions
 ) {
-    actionSheetPatches.push({ finder, callback });
+    actionSheetPatches.push({ finder, callback, options });
 
     return () => {
         const index = actionSheetPatches.findIndex(
@@ -103,7 +110,7 @@ export function patchActionSheet(cleanup: PluginCleanupApi) {
     );
 }
 
-function findActionGroups(tree: React.ReactElement): React.ReactElement[] {
+function findActionGroups(tree: React.ReactElement): React.ReactElement[] | undefined {
     return (findInReactFiber(
         tree as React.ReactElement,
         (node) => node?.[0]?.type?.name === "ActionSheetRowGroup",
@@ -124,10 +131,12 @@ function patchMemoSheet(
 ) {
     // @ts-expect-error
     const unpatch = after(module.default as MemoSheet, "type", (tree) => {
-        const actionGroups = findActionGroups(tree as React.ReactElement);
+        for (const patch of patches) {
+            const actionGroups =
+                patch.options?.findActionGroups?.(tree as React.ReactElement) ??
+                findActionGroups(tree as React.ReactElement);
 
-        if (actionGroups) {
-            for (const patch of patches) patch.callback(actionGroups, props);
+            if (actionGroups) patch.callback(actionGroups, props);
         }
 
         unpatch();
@@ -150,14 +159,19 @@ function patchLazySheet(
                     result as ActionSheetResultWithTypeFunction,
                     "type",
                     (tree) => {
-                        const actionGroups = findActionGroups(
-                            tree as React.ReactElement,
-                        );
+                        for (const patch of patches) {
+                            const actionGroups =
+                                patch.options?.findActionGroups?.(
+                                    tree as React.ReactElement,
+                                ) ??
+                                findActionGroups(
+                                    tree as React.ReactElement,
+                                );
 
-                        if (actionGroups) {
-                            for (const patch of patches)
+                            if (actionGroups)
                                 patch.callback(actionGroups, props);
                         }
+
                         return tree;
                     },
                 ),

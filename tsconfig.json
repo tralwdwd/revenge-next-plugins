@@ -17,6 +17,6 @@
             "@shared/*": ["./shared/*"]
         }
     },
-    "include": ["plugins", "types"],
+    "include": ["plugins", "types", "shared"],
     "exclude": ["plugins/*/build"]
 }

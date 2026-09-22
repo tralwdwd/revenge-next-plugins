@@ -36,7 +36,7 @@
 			"arrowParentheses": "asNeeded",
 			"enabled": true,
 			"quoteProperties": "asNeeded",
-			"quoteStyle": "single",
+			"quoteStyle": "double",
 			"semicolons": "always",
 			"trailingCommas": "all"
 		}

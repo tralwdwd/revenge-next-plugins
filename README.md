@@ -5,6 +5,9 @@
 - JumpToTop
 - SearchActionSheet
 
+#### Other plugins ported to Revenge Next (not mine)
+- Permission Viewer
+
 #### New Plugins
 
 - RevengeQuickActions

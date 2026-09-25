@@ -1,7 +1,6 @@
 import { ActionSheetActionCreators } from "@revenge-mod/discord/actions";
 import { Design } from "@revenge-mod/discord/design";
 import { Stores } from "@revenge-mod/discord/flux";
-import { unproxify } from "@revenge-mod/utils/proxy";
 import { UserActionCreators } from "@shared/modules/actions";
 import { VoidAvatar } from "@shared/modules/ui";
 import { FluxUtils } from "@shared/modules/utils";
@@ -27,8 +26,6 @@ export default function ChannelOverwritesSheet({
 }: {
 	channelId: string;
 }) {
-	unproxify(VoidAvatar);
-
 	const ChannelStore = Stores.ChannelStore as ToRevengeStore<ChannelStore>;
 	const GuildRoleStore =
 		Stores.GuildRoleStore as ToRevengeStore<GuildRoleStore>;

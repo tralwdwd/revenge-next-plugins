@@ -1,6 +1,7 @@
 import { ActionSheetActionCreators } from "@revenge-mod/discord/actions";
 import { Design } from "@revenge-mod/discord/design";
 import { Stores } from "@revenge-mod/discord/flux";
+import { unproxify } from "@revenge-mod/utils/proxy";
 import { UserActionCreators } from "@shared/modules/actions";
 import { VoidAvatar } from "@shared/modules/ui";
 import { FluxUtils } from "@shared/modules/utils";
@@ -26,6 +27,8 @@ export default function ChannelOverwritesSheet({
 }: {
 	channelId: string;
 }) {
+	unproxify(VoidAvatar);
+
 	const ChannelStore = Stores.ChannelStore as ToRevengeStore<ChannelStore>;
 	const GuildRoleStore =
 		Stores.GuildRoleStore as ToRevengeStore<GuildRoleStore>;
@@ -56,8 +59,6 @@ export default function ChannelOverwritesSheet({
 				UserActionCreators.getUser(overwrite.id),
 			);
 
-			console.log(memberOverwrites);
-
 			return memberOverwrites.flatMap(overwrite => {
 				const user = UserStore.getUser(overwrite.id);
 				const member = GuildMemberStore.getMember(guildId, overwrite.id);
@@ -76,8 +77,6 @@ export default function ChannelOverwritesSheet({
 			});
 		},
 	);
-
-	console.log(memberOverwrites, users);
 
 	return (
 		<Design.ActionSheet>

@@ -10,7 +10,7 @@ import {
     ReactNativeModuleId,
 } from "@revenge-mod/react";
 import { proxify } from "@revenge-mod/utils/proxy";
-import type { User } from "@vencord/discord-types";
+import type { Role, User } from "@vencord/discord-types";
 
 const { partial } = withDependencies; 
 
@@ -50,7 +50,37 @@ export let VoidAvatar: VoidAvatar = proxify(() => {
 				]),
 			),
 		),
-	);
+    );
 
 	if (module?.default) return (VoidAvatar = module.default);
+}, { hint: {} })!;
+
+type RoleItemProps = {
+    role: Role,
+    guildId: string
+};
+
+type RoleItemModule = {
+    RoleItem: RoleItem;
+}
+
+type RoleItem = React.FC<RoleItemProps>;
+
+export let RoleItem: RoleItem = proxify(() => {
+    const [module] = lookupModule(
+        withProps<RoleItemModule>("RoleItem").and(
+            withDependencies(
+                partial([
+                    ReactModuleId,
+                    ReactNativeModuleId,
+                    null,
+                    null,
+                    null,
+                    ReactJSXRuntimeModuleId
+                ])
+            )
+        )
+    );
+
+    if (module?.RoleItem) return (RoleItem = module.RoleItem);
 })!;

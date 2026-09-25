@@ -1,5 +1,4 @@
-import { Constants } from "@revenge-mod/discord/common/constants";
-import { BigFlagUtils, PermissionNameUtils } from "@shared/modules/utils";
+import { BigFlagUtils, PermissionUtils } from "@shared/modules/utils";
 import type { DiscordModules } from "@revenge-mod/discord/types";
 import type { BigFlags } from "@shared/modules/utils";
 import type { PermissionOverwrite } from "@vencord/discord-types";
@@ -25,13 +24,13 @@ export const resolveOverwritePermissions = (
 ): ResolvedOverwritePermissions => {
 	const { allow, deny } = overwrite;
 
-	const permissions = Constants!.Permissions;
+	const permissions = PermissionUtils.OrderedPermissions;
 	return {
 		allow: Object.values(permissions)
 			.filter(flag => BigFlagUtils.has(allow, flag))
-			.map(PermissionNameUtils.getPermissionName),
+			.map(PermissionUtils.getPermissionName),
 		deny: Object.values(permissions)
 			.filter(flag => BigFlagUtils.has(deny, flag))
-			.map(PermissionNameUtils.getPermissionName),
+			.map(PermissionUtils.getPermissionName),
 	};
 };

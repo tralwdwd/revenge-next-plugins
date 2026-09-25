@@ -64,23 +64,27 @@ type BigFlagUtils = {
 	getFlag(bit: number): BigFlagUtils;
 };
 
-export let BigFlagUtils: BigFlagUtils = proxify(() => {
-	const [module] = lookupModule(
-		withProps<BigFlagUtils>("has", "getFlag").and(
-			withDependencies(BigFlagsFilter),
-		),
-	);
+export let BigFlagUtils: BigFlagUtils = proxify(
+    () => {
+        const [module] = lookupModule(
+            withProps<BigFlagUtils>("has", "getFlag").and(
+                withDependencies(BigFlagsFilter),
+            ),
+        );
 
-	if (module) return (BigFlagUtils = module);
-})!;
+        if (module) return (BigFlagUtils = module);
+    },
+    { hint: {} },
+)!;
 
-type PermissionNameUtils = {
+type PermissionUtils = {
+    OrderedPermissions: BigFlags[];
 	getPermissionName(flags: BigFlags): string;
 };
 
-export let PermissionNameUtils: PermissionNameUtils = proxify(() => {
+export let PermissionUtils: PermissionUtils = proxify(() => {
 	const [module] = lookupModule(
-		withProps<PermissionNameUtils>("getPermissionName").and(
+		withProps<PermissionUtils>("OrderedPermissions", "getPermissionName").and(
 			withDependencies([
 				ConstantsModuleId,
 				BigFlagsFilter,
@@ -90,7 +94,7 @@ export let PermissionNameUtils: PermissionNameUtils = proxify(() => {
 		),
 	);
 
-	if (module) return (PermissionNameUtils = module);
-})!;
+	if (module) return (PermissionUtils = module);
+}, { hint: {} })!;
 
 // #endregion

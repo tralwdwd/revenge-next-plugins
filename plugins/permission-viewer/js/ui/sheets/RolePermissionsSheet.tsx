@@ -1,6 +1,7 @@
 import { Constants } from "@revenge-mod/discord/common/constants";
 import { Design } from "@revenge-mod/discord/design";
-import { BigFlagUtils, PermissionNameUtils } from "@shared/modules/utils";
+import { BigFlagUtils, PermissionUtils } from "@shared/modules/utils";
+import { PermissionRow } from "../components/PermissionRow";
 import type { BigFlags } from "@shared/modules/utils";
 import type { Role } from "@vencord/discord-types";
 
@@ -13,7 +14,7 @@ export default function RolePermissionsSheet({ role }: { role: Role }) {
 
 	const rolePermissions: string[] = Object.keys(permissions)
 		.filter(hasPermission)
-		.map(key => PermissionNameUtils.getPermissionName(permissions[key]));
+		.map(key => PermissionUtils.getPermissionName(permissions[key]));
 
 	return (
 		<Design.ActionSheet>
@@ -24,7 +25,7 @@ export default function RolePermissionsSheet({ role }: { role: Role }) {
 			<Design.ActionSheetRow.Group>
 				{rolePermissions.length > 0 ? (
 					rolePermissions.map(permission => (
-						<Design.ActionSheetRow label={permission} />
+						<PermissionRow label={permission} enabled />
 					))
 				) : (
 					<Design.ActionSheetRow label="This role adds no permissions." />

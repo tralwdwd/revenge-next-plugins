@@ -52,8 +52,7 @@ export default function UserPermissionsSheet({
 	const member = GuildMemberStore.getMember(guildId, user.id)!;
 	const name = member.nick ?? user.globalName ?? user.username;
 
-	const roleIds = member.roles;
-    roleIds.push(guildId);
+	const roleIds = [guildId, ...member.roles];
 	const roles = roleIds.map(id => GuildRoleStore.getRole(guildId, id));
 
 	const permissions = resolvePermissions(roles);

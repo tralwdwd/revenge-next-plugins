@@ -29,17 +29,21 @@ export function patchUserProfileMenu({ cleanup }: PluginApi) {
 				cleanup(
 					instead(module, "default", ([props], Component) => {
 						const { user } = props;
-						const guildId =
-							props.displayProfile?.guildId ?? props.channel.guild_id;
 
-						const result = Component(props) as React.ReactElement;
+                        const result = Component(props) as React.ReactElement;
+                        if (!props.channel) return result;
 
-						const menu = findInReactFiber(
-							result,
-							node => node?.props?.items,
-						)! as ContextMenuResult;
-						const items = menu.props.items[0] as DiscordModules.Components.ContextMenuItem[];
-
+                        const guildId =
+                            props.displayProfile?.guildId ??
+                            props.channel.guild_id;
+                            
+                        const menu = findInReactFiber(
+                            result,
+                            (node) => node?.props?.items,
+                        )! as ContextMenuResult;
+                        const items = menu.props
+                            .items[0] as DiscordModules.Components.ContextMenuItem[];
+                        
 						items.push({
 							label: "User Permissions",
 							action() {

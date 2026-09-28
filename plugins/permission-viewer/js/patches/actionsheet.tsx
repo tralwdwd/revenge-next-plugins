@@ -1,9 +1,11 @@
 import { TableRowAssetIcon } from "@revenge-mod/components";
 import { ActionSheetActionCreators } from "@revenge-mod/discord/actions";
 import { Design } from "@revenge-mod/discord/design";
+import { Stores } from "@revenge-mod/discord/flux";
 import { findInReactFiber } from "@revenge-mod/utils/react";
 import type { PluginApi } from "@revenge-mod/plugins/types";
-import type { Guild } from "@vencord/discord-types";
+import type { ChannelStore, Guild } from "@vencord/discord-types";
+import type { ToRevengeStore } from "@/types/util";
 
 type GuildActionSheetProps = {
 	guild: Guild;
@@ -57,24 +59,29 @@ export function patchActionSheet({ cleanup, unscoped }: PluginApi) {
 		ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(
 			/^ChannelLongPress/,
 			(tree, props) => {
-                const { channelId } = props;
+				const { channelId } = props;
+
+				const ChannelStore =
+					Stores.ChannelStore as ToRevengeStore<ChannelStore>;
+				const channel = ChannelStore.getChannel(channelId);
+				if (channel.isDM()) return;
 
 				tree.unshift(
-                    <Design.ActionSheetRow.Group>
-                        <Design.ActionSheetRow
-                            label="Channel Permissions"
-                            icon={<TableRowAssetIcon name="ShieldIcon" />}
-                            onPress={() => {
-                                ActionSheetActionCreators.openLazy(
-                                    import("../ui/sheets/channel/ChannelOverwritesSheet"),
-                                    `channel-overwrites-${channelId}`,
-                                    { channelId },
-                                    "stack",
-                                );
-                            }}
-                        />
-                    </Design.ActionSheetRow.Group>,
-                );
+					<Design.ActionSheetRow.Group>
+						<Design.ActionSheetRow
+							label="Channel Permissions"
+							icon={<TableRowAssetIcon name="ShieldIcon" />}
+							onPress={() => {
+								ActionSheetActionCreators.openLazy(
+									import("../ui/sheets/channel/ChannelOverwritesSheet"),
+									`channel-overwrites-${channelId}`,
+									{ channelId },
+									"stack",
+								);
+							}}
+						/>
+					</Design.ActionSheetRow.Group>,
+				);
 			},
 		),
 	);

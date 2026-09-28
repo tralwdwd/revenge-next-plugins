@@ -52,13 +52,29 @@
       "author": "tralwdwdd",
       "icon": "ShieldIcon",
       "channels": {
-        "latest": "1.0.0"
+        "latest": "1.0.1"
       },
       "versions": {
         "1.0.0": {
           "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.permission-viewer@1.0.0.zip",
           "sha256": "5d38c0fe1e54a6ed26a11be9aa12c8b699a37afc0f18142b38dba274fd8da318",
           "size": 2639,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": ">=1.0.6"
+            }
+          }
+        },
+        "1.0.1": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.permission-viewer@1.0.1.zip",
+          "sha256": "92e99e0e581fbd915d6f216d519b41d964c0d9a87d62670d573b0cfc3f1d6063",
+          "size": 3186,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"

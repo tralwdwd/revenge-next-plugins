@@ -1,3 +1,4 @@
+import { DispatcherModuleId } from "@revenge-mod/discord/common/flux";
 import { ImportTrackerModuleId } from "@revenge-mod/discord/common/import-tracker";
 import { getModules, lookupModule } from "@revenge-mod/modules/finders";
 import {
@@ -5,6 +6,7 @@ import {
     withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { instead } from "@revenge-mod/patcher";
+import { ReactJSXRuntimeModuleId, ReactModuleId } from "@revenge-mod/react";
 import { proxify } from "@revenge-mod/utils/proxy";
 import type { PluginApi } from "@revenge-mod/plugins/types";
 import type { Channel, Message, User } from "@vencord/discord-types";
@@ -18,16 +20,26 @@ type MessageActionSheetProps = {
 };
 
 type MessageActionSheetUtils = {
-    showLongPressMessageActionSheet: (props: MessageActionSheetProps) => void;
+	showLongPressMessageActionSheet: (props: MessageActionSheetProps) => void;
 };
 
+const { ordered, relative } = withDependencies;
+
 let MessageActionSheetUtils: MessageActionSheetUtils = proxify(() => {
-    const [module] = lookupModule(
+	const [module] = lookupModule(
         withProps<MessageActionSheetUtils>(
             "showLongPressMessageActionSheet",
         ).and(
             withDependencies([
-                withProps("openLazy"),
+                // action sheet filter
+                ordered([
+                    ReactModuleId,
+                    ReactJSXRuntimeModuleId,
+                    DispatcherModuleId,
+                    relative(1),
+                    relative(2),
+                    ImportTrackerModuleId,
+                ]),
                 null,
                 null,
                 ImportTrackerModuleId,
@@ -35,7 +47,7 @@ let MessageActionSheetUtils: MessageActionSheetUtils = proxify(() => {
         ),
     );
 
-    if (module) return (MessageActionSheetUtils = module);
+	if (module) return (MessageActionSheetUtils = module);
 })!;
 
 export function patchSearchRowList({ cleanup, unscoped }: PluginApi) {
@@ -70,8 +82,8 @@ export function patchSearchRowList({ cleanup, unscoped }: PluginApi) {
 
 						ret.props.onLongPress = () => {
 							MessageActionSheetUtils.showLongPressMessageActionSheet(
-                                actionSheetConfig,
-                            );
+								actionSheetConfig,
+							);
 						};
 
 						return ret;

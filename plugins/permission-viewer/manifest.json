@@ -1,23 +1,23 @@
 {
-    "format": 1,
-    "id": "dev.tralwdwdd.permission-viewer",
-    "name": "Permission Viewer",
-    "description": "View the permissions a user or channel has, and the roles of a server. Ported to Revenge Next",
-    "author": "tralwdwdd",
-    "version": "1.0.4",
-    "icon": "ShieldIcon",
-    "dependencies": {
-        "revenge.api": {
-            "version": ">=1 <2"
-        },
-        "discord": {
-            "version": "*"
-        },
-        "dev.tralwdwdd.tralwdwdd-lib": {
-            "version": ">=1.0.7"
-        }
-    },
-    "dist": {
-        "script": "index.js"
-    }
+	"format": 1,
+	"id": "dev.tralwdwdd.permission-viewer",
+	"name": "Permission Viewer",
+	"description": "View the permissions a user or channel has, and the roles of a server. Ported to Revenge Next",
+	"author": "tralwdwdd",
+	"version": "1.0.4",
+	"icon": "ShieldIcon",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		},
+		"dev.tralwdwdd.tralwdwdd-lib": {
+			"version": ">=1.0.7"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
 }

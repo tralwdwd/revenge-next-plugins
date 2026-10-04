@@ -1,7 +1,7 @@
 import { getAssetIdByName } from "@revenge-mod/assets";
 import {
-    ActionSheetActionCreators,
-    ToastActionCreators,
+	ActionSheetActionCreators,
+	ToastActionCreators,
 } from "@revenge-mod/discord/actions";
 import { Stores } from "@revenge-mod/discord/flux";
 import { RootNavigationRef } from "@revenge-mod/discord/modules/main_tabs_v2";

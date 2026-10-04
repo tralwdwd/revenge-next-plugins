@@ -1,23 +1,23 @@
 {
-    "format": 1,
-    "id": "dev.tralwdwdd.revenge-quick-actions",
-    "name": "RevengeQuickActions",
-    "description": "Adds Revenge Quck Actions to You Bar action sheet.",
-    "author": "tralwdwdd",
-    "version": "1.1.4",
-    "icon": "MagicWandIcon",
-    "dependencies": {
-        "revenge.api": {
-            "version": ">=1 <2"
-        },
-        "discord": {
-            "version": "*"
-        },
-        "dev.tralwdwdd.tralwdwdd-lib": {
-            "version": ">=1.0.7"
-        }
-    },
-    "dist": {
-        "script": "index.js"
-    }
+	"format": 1,
+	"id": "dev.tralwdwdd.revenge-quick-actions",
+	"name": "RevengeQuickActions",
+	"description": "Adds Revenge Quck Actions to You Bar action sheet.",
+	"author": "tralwdwdd",
+	"version": "1.1.4",
+	"icon": "MagicWandIcon",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		},
+		"dev.tralwdwdd.tralwdwdd-lib": {
+			"version": ">=1.0.7"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
 }

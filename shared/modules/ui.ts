@@ -1,18 +1,18 @@
 import { ConstantsModuleId } from "@revenge-mod/discord/common/constants";
 import { lookupModule } from "@revenge-mod/modules/finders";
 import {
-    withDependencies,
-    withProps,
+	withDependencies,
+	withProps,
 } from "@revenge-mod/modules/finders/filters";
 import {
-    ReactJSXRuntimeModuleId,
-    ReactModuleId,
-    ReactNativeModuleId,
+	ReactJSXRuntimeModuleId,
+	ReactModuleId,
+	ReactNativeModuleId,
 } from "@revenge-mod/react";
 import { proxify } from "@revenge-mod/utils/proxy";
 import type { Role, User } from "@vencord/discord-types";
 
-const { partial } = withDependencies; 
+const { partial } = withDependencies;
 
 type AvatarProps = {
 	user: User;
@@ -37,50 +37,53 @@ type VoidAvatarModule = {
 	getStatusSize: any;
 };
 
-export let VoidAvatar: VoidAvatar = proxify(() => {
+export let VoidAvatar: VoidAvatar = proxify(
+	() => {
+		const [module] = lookupModule(
+			withProps<VoidAvatarModule>("AvatarSizes", "getStatusSize").and(
+				withDependencies(
+					partial([
+						ReactModuleId,
+						ReactNativeModuleId,
+						ConstantsModuleId,
+						null,
+						ReactJSXRuntimeModuleId,
+					]),
+				),
+			),
+		);
+
+		if (module?.default) return (VoidAvatar = module.default);
+	},
+	{ hint: {} },
+)!;
+
+type RoleItemProps = {
+	role: Role;
+	guildId: string;
+};
+
+type RoleItemModule = {
+	RoleItem: RoleItem;
+};
+
+type RoleItem = React.FC<RoleItemProps>;
+
+export let RoleItem: RoleItem = proxify(() => {
 	const [module] = lookupModule(
-		withProps<VoidAvatarModule>("AvatarSizes", "getStatusSize").and(
+		withProps<RoleItemModule>("RoleItem").and(
 			withDependencies(
 				partial([
 					ReactModuleId,
 					ReactNativeModuleId,
-					ConstantsModuleId,
+					null,
+					null,
 					null,
 					ReactJSXRuntimeModuleId,
 				]),
 			),
 		),
-    );
+	);
 
-	if (module?.default) return (VoidAvatar = module.default);
-}, { hint: {} })!;
-
-type RoleItemProps = {
-    role: Role,
-    guildId: string
-};
-
-type RoleItemModule = {
-    RoleItem: RoleItem;
-}
-
-type RoleItem = React.FC<RoleItemProps>;
-
-export let RoleItem: RoleItem = proxify(() => {
-    const [module] = lookupModule(
-        withProps<RoleItemModule>("RoleItem").and(
-            withDependencies(
-                partial([
-                    ReactModuleId,
-                    ReactNativeModuleId,
-                    null,
-                    null,
-                    null,
-                    ReactJSXRuntimeModuleId
-                ])
-            )
-        )
-    );
-
-    if (module?.RoleItem) return (RoleItem = module.RoleItem);
+	if (module?.RoleItem) return (RoleItem = module.RoleItem);
 })!;

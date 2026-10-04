@@ -2,9 +2,9 @@ import { ConstantsModuleId } from "@revenge-mod/discord/common/constants";
 import { ImportTrackerModuleId } from "@revenge-mod/discord/common/import-tracker";
 import { lookupModule } from "@revenge-mod/modules/finders";
 import {
-    withDependencies,
-    withName,
-    withProps,
+	withDependencies,
+	withName,
+	withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { ReactModuleId } from "@revenge-mod/react";
 import { proxify } from "@revenge-mod/utils/proxy";
@@ -27,19 +27,12 @@ export let FluxUtils: FluxUtils = proxify(() => {
 	const [, SlicedToArrayModuleId] = lookupModule(withName("_slicedToArray"))!;
 
 	const [module] = lookupModule(
-        withProps<FluxUtils>(
-            "useStateFromStoresArray",
-            "useStateFromStores",
-        ).and(
-            withDependencies(
-                ordered([
-                    SlicedToArrayModuleId,
-                    ReactModuleId,
-                    relative(1),
-                ]),
-            ),
-        ),
-    );
+		withProps<FluxUtils>("useStateFromStoresArray", "useStateFromStores").and(
+			withDependencies(
+				ordered([SlicedToArrayModuleId, ReactModuleId, relative(1)]),
+			),
+		),
+	);
 
 	if (module) return (FluxUtils = module);
 })!;
@@ -68,36 +61,39 @@ type BigFlagUtils = {
 };
 
 export let BigFlagUtils: BigFlagUtils = proxify(
-    () => {
-        const [module] = lookupModule(
-            withProps<BigFlagUtils>("has", "getFlag").and(
-                withDependencies(BigFlagsFilter),
-            ),
-        );
+	() => {
+		const [module] = lookupModule(
+			withProps<BigFlagUtils>("has", "getFlag").and(
+				withDependencies(BigFlagsFilter),
+			),
+		);
 
-        if (module) return (BigFlagUtils = module);
-    },
-    { hint: {} },
+		if (module) return (BigFlagUtils = module);
+	},
+	{ hint: {} },
 )!;
 
 type PermissionUtils = {
-    OrderedPermissions: BigFlags[];
+	OrderedPermissions: BigFlags[];
 	getPermissionName(flags: BigFlags): string;
 };
 
-export let PermissionUtils: PermissionUtils = proxify(() => {
-	const [module] = lookupModule(
-		withProps<PermissionUtils>("OrderedPermissions", "getPermissionName").and(
-			withDependencies([
-				ConstantsModuleId,
-				BigFlagsFilter,
-				null,
-				ImportTrackerModuleId,
-			]),
-		),
-	);
+export let PermissionUtils: PermissionUtils = proxify(
+	() => {
+		const [module] = lookupModule(
+			withProps<PermissionUtils>("OrderedPermissions", "getPermissionName").and(
+				withDependencies([
+					ConstantsModuleId,
+					BigFlagsFilter,
+					null,
+					ImportTrackerModuleId,
+				]),
+			),
+		);
 
-	if (module) return (PermissionUtils = module);
-}, { hint: {} })!;
+		if (module) return (PermissionUtils = module);
+	},
+	{ hint: {} },
+)!;
 
 // #endregion

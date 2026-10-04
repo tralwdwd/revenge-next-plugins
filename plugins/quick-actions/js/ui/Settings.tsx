@@ -6,53 +6,53 @@ import type { PluginSettingsComponent } from "@revenge-mod/plugins/types";
 import type { QuickActionStorage } from "../types";
 
 type Props = React.ComponentProps<
-    PluginSettingsComponent<{ jsonStorage: QuickActionStorage }>
+	PluginSettingsComponent<{ jsonStorage: QuickActionStorage }>
 >;
 
 export function SettingsComponent({ api }: Props) {
-    const { actionConfigs } = api.jsonStorage.use()!;
+	const { actionConfigs } = api.jsonStorage.use()!;
 
-    const openActionSheet = (index: number) =>
-        ActionSheetActionCreators.openLazy(
-            import("./components/QuickActionSheet"),
-            "quick-action-sheet",
-            {
-                api,
-                index,
-            },
-        );
+	const openActionSheet = (index: number) =>
+		ActionSheetActionCreators.openLazy(
+			import("./components/QuickActionSheet"),
+			"quick-action-sheet",
+			{
+				api,
+				index,
+			},
+		);
 
-    const createAction = () => {
-        actionConfigs.push({
-            title: "New Action",
-            icon: "MagicWandIcon",
-            arrow: false,
-            action: QuickActionId.reloadApp,
-        });
+	const createAction = () => {
+		actionConfigs.push({
+			title: "New Action",
+			icon: "MagicWandIcon",
+			arrow: false,
+			action: QuickActionId.reloadApp,
+		});
 
-        api.jsonStorage.set({ actionConfigs });
+		api.jsonStorage.set({ actionConfigs });
 
-        openActionSheet(actionConfigs.length - 1);
-    };
+		openActionSheet(actionConfigs.length - 1);
+	};
 
-    return (
-        <Page>
-            <Design.TableRowGroup title="Configured Actions">
-                {actionConfigs.map((action, index) => (
-                    <Design.TableRow
-                        label={action.title}
-                        icon={<TableRowAssetIcon name={action.icon} />}
-                        arrow
-                        onPress={() => openActionSheet(index)}
-                    />
-                ))}
-            </Design.TableRowGroup>
-            <Design.Button
-                text="New Action"
-                variant="primary"
-                size="md"
-                onPress={createAction}
-            />
-        </Page>
-    );
+	return (
+		<Page>
+			<Design.TableRowGroup title="Configured Actions">
+				{actionConfigs.map((action, index) => (
+					<Design.TableRow
+						label={action.title}
+						icon={<TableRowAssetIcon name={action.icon} />}
+						arrow
+						onPress={() => openActionSheet(index)}
+					/>
+				))}
+			</Design.TableRowGroup>
+			<Design.Button
+				text="New Action"
+				variant="primary"
+				size="md"
+				onPress={createAction}
+			/>
+		</Page>
+	);
 }

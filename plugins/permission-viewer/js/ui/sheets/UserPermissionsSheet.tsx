@@ -6,10 +6,10 @@ import { BigFlagUtils, PermissionUtils } from "@shared/modules/utils";
 import { PermissionRow } from "../components/PermissionRow";
 import type { BigFlags } from "@shared/modules/utils";
 import type {
-    GuildMemberStore,
-    GuildRoleStore,
-    Role,
-    User,
+	GuildMemberStore,
+	GuildRoleStore,
+	Role,
+	User,
 } from "@vencord/discord-types";
 import type { ToRevengeStore } from "@/types/util";
 
@@ -31,10 +31,10 @@ function resolvePermissions(roles: Role[]): PermissionsResult {
 
 	const permissions = PermissionUtils.OrderedPermissions;
 
-	return permissions.map((permission) => ({
-        name: PermissionUtils.getPermissionName(permission),
-        has: BigFlagUtils.has(combined, permission),
-    }));
+	return permissions.map(permission => ({
+		name: PermissionUtils.getPermissionName(permission),
+		has: BigFlagUtils.has(combined, permission),
+	}));
 }
 
 export default function UserPermissionsSheet({

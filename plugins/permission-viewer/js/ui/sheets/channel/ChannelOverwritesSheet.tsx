@@ -6,12 +6,12 @@ import { VoidAvatar } from "@shared/modules/ui";
 import { FluxUtils } from "@shared/modules/utils";
 import { PermissionOverwriteType } from "@vencord/discord-types/enums";
 import type {
-    ChannelStore,
-    GuildMemberStore,
-    GuildRoleStore,
-    PermissionOverwrite,
-    User,
-    UserStore,
+	ChannelStore,
+	GuildMemberStore,
+	GuildRoleStore,
+	PermissionOverwrite,
+	User,
+	UserStore,
 } from "@vencord/discord-types";
 import type { ToRevengeStore } from "@/types/util";
 

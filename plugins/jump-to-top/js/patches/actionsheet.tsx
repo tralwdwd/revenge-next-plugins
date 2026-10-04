@@ -10,142 +10,130 @@ import type { Channel, ChannelStore } from "@vencord/discord-types";
 import type { ToRevengeStore } from "@/types/util";
 
 type ChannelLongPressProps = {
-    channelId: string;
+	channelId: string;
 };
 
 type ForumPostLongPressProps = {
-    thread: Channel;
+	thread: Channel;
 };
 
 const allowedChannelTypes = [
-    ChannelType.GUILD_TEXT,
-    ChannelType.DM,
-    ChannelType.GUILD_VOICE,
-    ChannelType.GROUP_DM,
-    ChannelType.GUILD_ANNOUNCEMENT,
-    ChannelType.GUILD_STORE,
-    ChannelType.ANNOUNCEMENT_THREAD,
-    ChannelType.PUBLIC_THREAD,
-    ChannelType.PRIVATE_THREAD,
+	ChannelType.GUILD_TEXT,
+	ChannelType.DM,
+	ChannelType.GUILD_VOICE,
+	ChannelType.GROUP_DM,
+	ChannelType.GUILD_ANNOUNCEMENT,
+	ChannelType.GUILD_STORE,
+	ChannelType.ANNOUNCEMENT_THREAD,
+	ChannelType.PUBLIC_THREAD,
+	ChannelType.PRIVATE_THREAD,
 ];
 
 export function patchActionSheet({ cleanup, unscoped }: PluginApi) {
-    const { ActionSheetPatcher } = unscoped.tralwdwdd;
+	const { ActionSheetPatcher } = unscoped.tralwdwdd;
 
-    cleanup(
-        ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(
-            /^ChannelLongPress/,
-            (tree, props) => {
-                const ChannelStore =
-                    Stores.ChannelStore as ToRevengeStore<ChannelStore>;
+	cleanup(
+		ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(
+			/^ChannelLongPress/,
+			(tree, props) => {
+				const ChannelStore =
+					Stores.ChannelStore as ToRevengeStore<ChannelStore>;
 
-                const { id: channelId, type } = ChannelStore.getChannel(
-                    props.channelId,
-                );
+				const { id: channelId, type } = ChannelStore.getChannel(
+					props.channelId,
+				);
 
-                if (!allowedChannelTypes.includes(type)) return;
+				if (!allowedChannelTypes.includes(type)) return;
 
-                tree.unshift(
-                    <Design.ActionSheetRow.Group>
-                        <Design.ActionSheetRow
-                            label="Jump To Top"
-                            icon={
-                                <UpsideDown>
-                                    <Design.ActionSheetRow.Icon
-                                        source={
-                                            getAssetIdByName(
-                                                "ArrowLargeDownIcon",
-                                            )!
-                                        }
-                                    />
-                                </UpsideDown>
-                            }
-                            onPress={() => {
-                                jumpToTop({
-                                    isDifferentChannel: true,
-                                    channelId,
-                                });
+				tree.unshift(
+					<Design.ActionSheetRow.Group>
+						<Design.ActionSheetRow
+							label="Jump To Top"
+							icon={
+								<UpsideDown>
+									<Design.ActionSheetRow.Icon
+										source={getAssetIdByName("ArrowLargeDownIcon")!}
+									/>
+								</UpsideDown>
+							}
+							onPress={() => {
+								jumpToTop({
+									isDifferentChannel: true,
+									channelId,
+								});
 
-                                ActionSheetActionCreators.hideActionSheet();
-                            }}
-                        />
-                    </Design.ActionSheetRow.Group>,
-                );
-            },
-        ),
-        ActionSheetPatcher.registerActionSheetPatch<ForumPostLongPressProps>(
-            "ForumPostLongPressActionSheet",
-            (tree, props) => {
-                const { guild_id: guildId, id: threadId } = props.thread;
+								ActionSheetActionCreators.hideActionSheet();
+							}}
+						/>
+					</Design.ActionSheetRow.Group>,
+				);
+			},
+		),
+		ActionSheetPatcher.registerActionSheetPatch<ForumPostLongPressProps>(
+			"ForumPostLongPressActionSheet",
+			(tree, props) => {
+				const { guild_id: guildId, id: threadId } = props.thread;
 
-                tree.unshift(
-                    <Design.ActionSheetRow.Group>
-                        <Design.ActionSheetRow
-                            label="Jump To Top"
-                            icon={
-                                <UpsideDown>
-                                    <Design.ActionSheetRow.Icon
-                                        source={
-                                            getAssetIdByName(
-                                                "ArrowLargeDownIcon",
-                                            )!
-                                        }
-                                    />
-                                </UpsideDown>
-                            }
-                            onPress={() => {
-                                jumpToTop({
-                                    isDifferentChannel: false,
-                                    channelId: threadId,
-                                    guildId,
-                                });
+				tree.unshift(
+					<Design.ActionSheetRow.Group>
+						<Design.ActionSheetRow
+							label="Jump To Top"
+							icon={
+								<UpsideDown>
+									<Design.ActionSheetRow.Icon
+										source={getAssetIdByName("ArrowLargeDownIcon")!}
+									/>
+								</UpsideDown>
+							}
+							onPress={() => {
+								jumpToTop({
+									isDifferentChannel: false,
+									channelId: threadId,
+									guildId,
+								});
 
-                                ActionSheetActionCreators.hideActionSheet();
-                            }}
-                        />
-                    </Design.ActionSheetRow.Group>,
-                );
-            },
-        ),
-        ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(
-            "ThreadLongPressActionSheet",
-            (tree, props) => {
-                const ChannelStore =
-                    Stores.ChannelStore as ToRevengeStore<ChannelStore>;
+								ActionSheetActionCreators.hideActionSheet();
+							}}
+						/>
+					</Design.ActionSheetRow.Group>,
+				);
+			},
+		),
+		ActionSheetPatcher.registerActionSheetPatch<ChannelLongPressProps>(
+			"ThreadLongPressActionSheet",
+			(tree, props) => {
+				const ChannelStore =
+					Stores.ChannelStore as ToRevengeStore<ChannelStore>;
 
-                const { id: channelId, type } = ChannelStore.getChannel(
-                    props.channelId,
-                );
+				const { id: channelId, type } = ChannelStore.getChannel(
+					props.channelId,
+				);
 
-                if (!allowedChannelTypes.includes(type)) return;
+				if (!allowedChannelTypes.includes(type)) return;
 
-                tree.unshift(
-                    <Design.ActionSheetRow.Group>
-                        <Design.ActionSheetRow
-                            label="Jump To Top"
-                            icon={
-                                <UpsideDown>
-                                    <Design.ActionSheetRow.Icon
-                                        source={
-                                            getAssetIdByName(
-                                                "ArrowLargeDownIcon",
-                                            )!
-                                        }
-                                    />
-                                </UpsideDown>
-                            }
-                            onPress={() => {
-                                jumpToTop({
-                                    isDifferentChannel: true,
-                                    channelId,
-                                });
+				tree.unshift(
+					<Design.ActionSheetRow.Group>
+						<Design.ActionSheetRow
+							label="Jump To Top"
+							icon={
+								<UpsideDown>
+									<Design.ActionSheetRow.Icon
+										source={getAssetIdByName("ArrowLargeDownIcon")!}
+									/>
+								</UpsideDown>
+							}
+							onPress={() => {
+								jumpToTop({
+									isDifferentChannel: true,
+									channelId,
+								});
 
-                                ActionSheetActionCreators.hideActionSheet();
-                            }}
-                        />
-                    </Design.ActionSheetRow.Group>,
-                );
-            },
-        ),
-    );
+								ActionSheetActionCreators.hideActionSheet();
+							}}
+						/>
+					</Design.ActionSheetRow.Group>,
+				);
+			},
+		),
+	);
 }

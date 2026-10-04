@@ -2,12 +2,12 @@ import { patchActionSheet } from "./patches/actionsheet";
 import { patchUserProfileMenu } from "./patches/profile";
 
 export default plugin({
-    start(api) {
-        patchActionSheet(api);
-        patchUserProfileMenu(api);
+	start(api) {
+		patchActionSheet(api);
+		patchUserProfileMenu(api);
 
-        const { plugin } = api;
+		const { plugin } = api;
 
-        if (plugin.startedLate) plugin.requireReload();
-    }
+		if (plugin.startedLate) plugin.requireReload();
+	},
 });

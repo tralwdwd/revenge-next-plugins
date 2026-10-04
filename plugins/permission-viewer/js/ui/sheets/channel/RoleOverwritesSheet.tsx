@@ -26,10 +26,9 @@ export default function RoleOverwritesSheet({
 					<PermissionRow label={permission} />
 				))}
 
-				{allow.length === 0 &&
-					(deny.length === 0 && (
-						<Design.ActionSheetRow label="No overwrites." />
-					))}
+				{allow.length === 0 && deny.length === 0 && (
+					<Design.ActionSheetRow label="No overwrites." />
+				)}
 			</Design.ActionSheetRow.Group>
 		</Design.ActionSheet>
 	);

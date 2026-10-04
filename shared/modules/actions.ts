@@ -2,9 +2,9 @@ import { ConstantsModuleId } from "@revenge-mod/discord/common/constants";
 import { LoggerModuleId } from "@revenge-mod/discord/common/logger";
 import { lookupModule } from "@revenge-mod/modules/finders";
 import {
-    withDependencies,
-    withName,
-    withProps,
+	withDependencies,
+	withName,
+	withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { proxify } from "@revenge-mod/utils/proxy";
 
@@ -24,11 +24,7 @@ export let UserActionCreators: UserActionCreators = proxify(() => {
 	const [module] = lookupModule(
 		withProps<UserActionCreators>("getUser", "fetchProfile").and(
 			withDependencies(
-				ordered([
-					AsyncToGeneratorModuleId,
-					ConstantsModuleId,
-					LoggerModuleId,
-				]),
+				ordered([AsyncToGeneratorModuleId, ConstantsModuleId, LoggerModuleId]),
 			),
 		),
 	);
@@ -37,38 +33,35 @@ export let UserActionCreators: UserActionCreators = proxify(() => {
 })!;
 
 type MessageActionCreators = {
-    jumpToMessage(config: {
-        channelId?: string,
-        messageId?: string,
-        flash?: boolean,
-        jumpType?: string
-    }): void;
-}
+	jumpToMessage(config: {
+		channelId?: string;
+		messageId?: string;
+		flash?: boolean;
+		jumpType?: string;
+	}): void;
+};
 
 export let MessageActionCreators: MessageActionCreators = proxify(
-    () => {
-        const [, SlicedToArrayModuleId] = lookupModule(
-            withName("_slicedToArray"),
-        )!;
-        const [, AsyncToGeneratorModuleId] = lookupModule(
-            withName("_asyncToGenerator"),
-        );
+	() => {
+		const [, SlicedToArrayModuleId] = lookupModule(withName("_slicedToArray"))!;
+		const [, AsyncToGeneratorModuleId] = lookupModule(
+			withName("_asyncToGenerator"),
+		);
 
-        const [module] = lookupModule(
-            withProps<MessageActionCreators>("jumpToMessage").and(
-                withDependencies(
-                    ordered([
-                        SlicedToArrayModuleId,
-                        AsyncToGeneratorModuleId,
-                        relative(1),
-                        relative(2),
-                    ]),
-                ),
-            ),
-        );
+		const [module] = lookupModule(
+			withProps<MessageActionCreators>("jumpToMessage").and(
+				withDependencies(
+					ordered([
+						SlicedToArrayModuleId,
+						AsyncToGeneratorModuleId,
+						relative(1),
+						relative(2),
+					]),
+				),
+			),
+		);
 
-        if (module) return (MessageActionCreators = module);
-    },
-    { hint: {} },
+		if (module) return (MessageActionCreators = module);
+	},
+	{ hint: {} },
 )!;
-

@@ -5,33 +5,33 @@ import type { PluginApi } from "@revenge-mod/plugins/types";
 import type { QuickActionStorage } from "../types";
 
 export function patchActionSheet({
-    jsonStorage,
-    unscoped,
-    cleanup,
+	jsonStorage,
+	unscoped,
+	cleanup,
 }: PluginApi<{ jsonStorage: QuickActionStorage }>) {
-    const { ActionSheetPatcher } = unscoped.tralwdwdd;
+	const { ActionSheetPatcher } = unscoped.tralwdwdd;
 
-    cleanup(
-        ActionSheetPatcher.registerActionSheetPatch(
-            "you-account-action-sheet-key",
-            (tree) => {
-                const { actionConfigs } = jsonStorage.use()!;
+	cleanup(
+		ActionSheetPatcher.registerActionSheetPatch(
+			"you-account-action-sheet-key",
+			tree => {
+				const { actionConfigs } = jsonStorage.use()!;
 
-                if (actionConfigs.length === 0) return;
+				if (actionConfigs.length === 0) return;
 
-                tree.unshift(
-                    <Design.ActionSheetRow.Group title="Quick Actions">
-                        {actionConfigs.map((config) => (
-                            <Design.ActionSheetRow
-                                label={config.title}
-                                icon={<TableRowAssetIcon name={config.icon} />}
-                                arrow={config.arrow}
-                                onPress={quickActions[config.action].action}
-                            />
-                        ))}
-                    </Design.ActionSheetRow.Group>,
-                );
-            },
-        ),
-    );
+				tree.unshift(
+					<Design.ActionSheetRow.Group title="Quick Actions">
+						{actionConfigs.map(config => (
+							<Design.ActionSheetRow
+								label={config.title}
+								icon={<TableRowAssetIcon name={config.icon} />}
+								arrow={config.arrow}
+								onPress={quickActions[config.action].action}
+							/>
+						))}
+					</Design.ActionSheetRow.Group>,
+				);
+			},
+		),
+	);
 }

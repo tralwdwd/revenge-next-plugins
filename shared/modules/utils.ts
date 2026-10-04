@@ -11,7 +11,7 @@ import { proxify } from "@revenge-mod/utils/proxy";
 import type { DiscordModules } from "@revenge-mod/discord/types";
 import type { useStateFromStores } from "@vencord/discord-types";
 
-const { relative } = withDependencies;
+const { relative, ordered } = withDependencies;
 
 // #region flux
 
@@ -27,16 +27,19 @@ export let FluxUtils: FluxUtils = proxify(() => {
 	const [, SlicedToArrayModuleId] = lookupModule(withName("_slicedToArray"))!;
 
 	const [module] = lookupModule(
-		withProps<FluxUtils>("useStateFromStoresArray", "useStateFromStores").and(
-			withDependencies([
-				SlicedToArrayModuleId,
-				ReactModuleId,
-				null,
-				relative(1),
-				ImportTrackerModuleId,
-			]),
-		),
-	);
+        withProps<FluxUtils>(
+            "useStateFromStoresArray",
+            "useStateFromStores",
+        ).and(
+            withDependencies(
+                ordered([
+                    SlicedToArrayModuleId,
+                    ReactModuleId,
+                    relative(1),
+                ]),
+            ),
+        ),
+    );
 
 	if (module) return (FluxUtils = module);
 })!;

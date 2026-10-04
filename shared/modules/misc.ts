@@ -8,7 +8,7 @@ import {
 } from "@revenge-mod/modules/finders/filters";
 import { proxify } from "@revenge-mod/utils/proxy";
 
-const { relative } = withDependencies;
+const { relative, ordered } = withDependencies;
 
 type ChannelRouter = {
     transitionToChannel(id: string): void;
@@ -17,21 +17,18 @@ type ChannelRouter = {
 export let ChannelRouter: ChannelRouter = proxify(() => {
     const [module] = lookupModule(
         withProps("transitionToChannel", "transitionToThread").and(
-            withDependencies([
-                withProps("getChannel", "hasChannel"),
-                ConstantsModuleId,
-                relative(1),
-                relative(2),
-                null,
-                null,
-                null,
-                ImportTrackerModuleId,
-            ]),
+            withDependencies(
+                ordered([
+                    ConstantsModuleId,
+                    relative(1),
+                    relative(2),
+                ]),
+            ),
         ),
     );
 
     if (module) return (ChannelRouter = module);
-}, {})!;
+}, {hint: {}})!;
 
 type GuildRouter = {
     transitionTo(location: string): void;

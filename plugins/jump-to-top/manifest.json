@@ -4,7 +4,7 @@
     "name": "JumpToTop",
     "description": "Adds a button to jump to the first message in a chat. The opposite of jump to present.",
     "author": "tralwdwdd",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "icon": "ArrowSmallUpIcon",
     "dependencies": {
         "revenge.api": {
@@ -14,7 +14,7 @@
             "version": "*"
         },
         "dev.tralwdwdd.tralwdwdd-lib": {
-            "version": ">=1.0.4"
+            "version": ">=1.0.7"
         }
     },
     "dist": {

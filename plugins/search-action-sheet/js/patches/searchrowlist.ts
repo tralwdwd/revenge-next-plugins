@@ -1,12 +1,13 @@
-import { DispatcherModuleId } from "@revenge-mod/discord/common/flux";
+import {
+    ActionSheetActionCreatorsModuleId
+} from "@revenge-mod/discord/actions";
 import { ImportTrackerModuleId } from "@revenge-mod/discord/common/import-tracker";
 import { getModules, lookupModule } from "@revenge-mod/modules/finders";
 import {
-	withDependencies,
-	withProps,
+    withDependencies,
+    withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { instead } from "@revenge-mod/patcher";
-import { ReactJSXRuntimeModuleId, ReactModuleId } from "@revenge-mod/react";
 import { proxify } from "@revenge-mod/utils/proxy";
 import type { PluginApi } from "@revenge-mod/plugins/types";
 import type { Channel, Message, User } from "@vencord/discord-types";
@@ -23,21 +24,11 @@ type MessageActionSheetUtils = {
 	showLongPressMessageActionSheet: (props: MessageActionSheetProps) => void;
 };
 
-const { ordered, relative } = withDependencies;
-
 let MessageActionSheetUtils: MessageActionSheetUtils = proxify(() => {
 	const [module] = lookupModule(
 		withProps<MessageActionSheetUtils>("showLongPressMessageActionSheet").and(
 			withDependencies([
-				// action sheet filter
-				ordered([
-					ReactModuleId,
-					ReactJSXRuntimeModuleId,
-					DispatcherModuleId,
-					relative(1),
-					relative(2),
-					ImportTrackerModuleId,
-				]),
+				ActionSheetActionCreatorsModuleId,
 				null,
 				null,
 				ImportTrackerModuleId,

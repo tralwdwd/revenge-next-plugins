@@ -1,11 +1,9 @@
-import {
-    ActionSheetActionCreatorsModuleId
-} from "@revenge-mod/discord/actions";
+import { ActionSheetActionCreatorsModuleId } from "@revenge-mod/discord/actions";
 import { ImportTrackerModuleId } from "@revenge-mod/discord/common/import-tracker";
 import { getModules, lookupModule } from "@revenge-mod/modules/finders";
 import {
-    withDependencies,
-    withProps,
+	withDependencies,
+	withProps,
 } from "@revenge-mod/modules/finders/filters";
 import { instead } from "@revenge-mod/patcher";
 import { proxify } from "@revenge-mod/utils/proxy";

@@ -32,7 +32,7 @@ export function patchUserProfileMenu({ cleanup }: PluginApi) {
 						const { user } = props;
 
 						const result = Component(props) as React.ReactElement;
-						if (!props.channel) return result;
+						if (!props.channel || props.channel.isDM()) return result;
 
 						const guildId =
 							props.displayProfile?.guildId ?? props.channel.guild_id;

@@ -3,7 +3,7 @@ import { Design } from "@revenge-mod/discord/design";
 
 export function PermissionRow({
 	label,
-	enabled = true,
+	enabled = false,
 }: {
 	label: string;
 	enabled?: boolean;

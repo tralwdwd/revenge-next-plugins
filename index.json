@@ -191,7 +191,7 @@
       "author": "tralwdwdd",
       "icon": "MagicWandIcon",
       "channels": {
-        "latest": "1.1.4"
+        "latest": "1.1.5"
       },
       "versions": {
         "1.1.2": {
@@ -230,6 +230,22 @@
           "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.revenge-quick-actions@1.1.4.zip",
           "sha256": "374072a989a4c1efd2ce91300516b835cd68ae037655d19ef419d788ffa645e1",
           "size": 2735,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "dev.tralwdwdd.tralwdwdd-lib": {
+              "version": ">=1.0.7"
+            }
+          }
+        },
+        "1.1.5": {
+          "url": "https://next.tralwdwd.dev/pool/dev.tralwdwdd.revenge-quick-actions@1.1.5.zip",
+          "sha256": "6d7f9baace121f7b9870a04e4ddae15ce9a1fab916a9929958d0133a25387787",
+          "size": 2739,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"

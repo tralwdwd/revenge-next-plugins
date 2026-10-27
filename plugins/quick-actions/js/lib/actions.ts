@@ -1,17 +1,20 @@
-import { getAssetIdByName } from "@revenge-mod/assets";
 import {
-	ActionSheetActionCreators,
-	ToastActionCreators,
+    ActionSheetActionCreators,
+    ToastActionCreators,
 } from "@revenge-mod/discord/actions";
 import { Stores } from "@revenge-mod/discord/flux";
 import { RootNavigationRef } from "@revenge-mod/discord/modules/main_tabs_v2";
 import { callNativeMethodSync } from "@revenge-mod/modules/native";
 import { reloadApp } from "@revenge-mod/modules/native/app";
+import { lookupGeneratedIconComponent } from "@revenge-mod/utils/discord";
+import { proxify } from "@revenge-mod/utils/proxy";
 import { ChannelRouter, GuildRouter } from "@shared/modules/misc";
 import { REVENGE_SERVER_ID, REVENGE_SUPPORT_CHANNEL_ID } from "./constants";
 import type { GuildStore } from "@vencord/discord-types";
 import type { ToRevengeStore } from "@/types/util";
 import type { QuickAction } from "../types";
+
+const CircleXIcon = proxify(() => lookupGeneratedIconComponent("CircleXIcon"));
 
 const withHideActionSheet = (action: () => void) => {
 	action();
@@ -59,10 +62,9 @@ export const quickActions = {
 				const GuildStore = Stores.GuildStore as ToRevengeStore<GuildStore>;
 
 				if (GuildStore.getGuild(REVENGE_SERVER_ID) == null) {
-					ToastActionCreators.open({
-						key: "not-in-revenge-server",
-						content: "You are not in the Revenge server!",
-						icon: getAssetIdByName("CircleXIcon"),
+					ToastActionCreators.open("not-in-revenge-server", {
+						text: "You are not in the Revenge server!",
+						icon: CircleXIcon,
 					});
 
 					return;
